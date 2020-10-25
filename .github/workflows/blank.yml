@@ -29,5 +29,5 @@ jobs:
       run: |
         cd /home/runner/work/docker-buildx/docker-buildx/debian-ad
         docker buildx build -t ${{ secrets.DOCKER_USERNAME }}/debian-ad --platform linux/arm64 .
-        docker push ${{ secrets.DOCKER_USERNAME }}/ssv2ray
+        docker push ${{ secrets.DOCKER_USERNAME }}/debian-ad
        
