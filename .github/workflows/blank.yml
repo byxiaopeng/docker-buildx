@@ -23,6 +23,10 @@ jobs:
         docker buildx version
         #启用 binfmt_misc
         docker run --privileged --rm docker/binfmt:a7996909642ee92942dcd6cff44b9b95f08dad64
+        #创建一个新的构建器
+        docker buildx create --use --name mybuilder
+        #启动构建器
+        docker buildx inspect mybuilder --bootstrap
         #查看当前使用的构建器及构建器支持的 CPU 架构
         docker buildx ls
     - name: docker ssv2ray
