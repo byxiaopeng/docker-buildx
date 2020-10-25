@@ -1,0 +1,33 @@
+name: go docker
+on:
+  #schedule:
+    #- cron: 10 22 * * *
+  watch:
+    types: started       
+jobs:
+  build:
+    runs-on: ubuntu-latest  
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install build dependencies
+      run: |
+        sudo apt-get -y update
+        sudo apt-get -y install wget
+        sudo apt-get -y install curl
+    - name: login docker
+      run: |
+        cd /home/runner
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        #启用 buildx 插件
+        export DOCKER_CLI_EXPERIMENTAL=enabled
+        docker buildx version
+        #启用 binfmt_misc
+        docker run --privileged --rm docker/binfmt
+        #查看当前使用的构建器及构建器支持的 CPU 架构
+        docker buildx ls
+    - name: docker ssv2ray
+      run: |
+        cd /home/runner/work/docker-buildx/docker-buildx/debian-ad
+        docker buildx build -t ${{ secrets.DOCKER_USERNAME }}/debian-ad --platform linux/arm64 .
+        docker push ${{ secrets.DOCKER_USERNAME }}/ssv2ray
+       
