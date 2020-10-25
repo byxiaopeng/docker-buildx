@@ -29,7 +29,7 @@ jobs:
         docker buildx inspect mybuilder --bootstrap
         #查看当前使用的构建器及构建器支持的 CPU 架构
         docker buildx ls
-    - name: docker ssv2ray
+    - name: docker debian-ad
       run: |
         cd /home/runner/work/docker-buildx/docker-buildx
         #使用 buildx 构建 并推送倒hub
